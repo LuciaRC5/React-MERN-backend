@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
@@ -23,6 +24,11 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
 //TODO: CRUD: Eventos
 app.use('/api/events', require('./routes/events')); //ruta donde se habilita el endpoint, el archivo que exporta
+
+//solución error
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html')); //donde está corriendo la aplicación, le adjuntamos la ruta al index.html
+})
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => {
